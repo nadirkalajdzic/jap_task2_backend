@@ -73,14 +73,14 @@ namespace jap_task2_backend.Services.VideosService
             var query = _context.Videos.AsQueryable();
             AddFiltersForVideoSearch(Search, ref query);
 
-            var videos = await query.OrderByDescending(x => x.Ratings.Select(x => x.Value)
-                                    .DefaultIfEmpty().Average()).ToListAsync();
+            serviceResponse.Data = await query.OrderByDescending(x => x.Ratings.Select(x => x.Value)
+                                    .DefaultIfEmpty().Average())
+                                    .Select(x => _mapper.Map<GetVideoTextAttributesDTO>(x)).ToListAsync();
 
-            serviceResponse.Data = videos.Select(x => _mapper.Map<GetVideoTextAttributesDTO>(x)).ToList();
             return serviceResponse;
         }
 
-        private void AddFiltersForVideoSearch(string Search, ref IQueryable<Video> query)
+        private static void AddFiltersForVideoSearch(string Search, ref IQueryable<Video> query)
         {
 
             var searchQuery = Regex.Split(Search, @"\s+").ToList();

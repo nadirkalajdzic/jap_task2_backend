@@ -35,7 +35,7 @@ namespace jap_task2_backend
             
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "jap_task1_backend", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "jap_task2_backend", Version = "v1" });
                 
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
@@ -74,7 +74,7 @@ namespace jap_task2_backend
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "jap_task1_backend v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "jap_task2_backend v1"));
             }
 
             app.UseHttpsRedirection();
