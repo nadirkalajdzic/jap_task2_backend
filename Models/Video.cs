@@ -14,5 +14,6 @@ namespace jap_task2_backend.Models
         public List<Actor> Actors { get; set; } = new List<Actor>();
         public List<Category> Categories { get; set; } = new List<Category>();
         public List<Rating> Ratings { get; set; } = new List<Rating>();
+        public List<Screening> Screenings { get; set; } = new List<Screening>();
     }
 }

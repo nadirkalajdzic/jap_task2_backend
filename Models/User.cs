@@ -12,5 +12,6 @@ namespace jap_task2_backend.Models
         public byte[] Salt { get; set; }
         public byte[] Hash { get; set; }
         public List<Rating> Ratings { get; set; } = new List<Rating>();
+        public List<BoughtTicket> BoughtTickets { get; set; } = new List<BoughtTicket>();
     }
 }
