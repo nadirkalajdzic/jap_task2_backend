@@ -38,16 +38,38 @@ namespace jap_task2_backend.Migrations
                 name: "MostRatedMoviesReports",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     MovieId = table.Column<int>(type: "int", nullable: false),
                     MovieName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumberOfRatings = table.Column<int>(type: "int", nullable: false),
-                    AverageRating = table.Column<int>(type: "int", nullable: false)
+                    AverageRating = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MostRatedMoviesReports", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MoviesWithMostScreeningsReports",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    MovieName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumberOfScreenings = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MoviesWithMostSoldTicketsReports",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    MovieName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ScreeningName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SoldTickets = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
                 });
 
             migrationBuilder.CreateTable(
@@ -323,7 +345,7 @@ namespace jap_task2_backend.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "Hash", "Name", "Salt", "Surname" },
-                values: new object[] { 1, "admin@gmail.com", new byte[] { 34, 121, 97, 12, 233, 158, 2, 73, 173, 129, 26, 114, 163, 91, 197, 39, 216, 192, 197, 195, 117, 37, 47, 92, 90, 182, 35, 0, 22, 169, 195, 226, 96, 92, 32, 255, 74, 154, 7, 94, 77, 49, 95, 40, 201, 75, 255, 125, 224, 22, 238, 21, 11, 26, 97, 191, 216, 69, 235, 186, 213, 240, 151, 27 }, "Admin", new byte[] { 108, 138, 162, 71, 105, 140, 224, 209, 239, 53, 239, 178, 225, 216, 57, 30, 196, 66, 138, 101, 193, 133, 32, 97, 161, 28, 70, 108, 83, 243, 15, 45, 172, 226, 63, 84, 40, 207, 83, 56, 198, 90, 122, 189, 226, 38, 146, 86, 4, 222, 221, 179, 134, 77, 143, 154, 165, 81, 128, 224, 235, 12, 121, 152, 205, 179, 90, 4, 253, 71, 51, 14, 97, 138, 255, 6, 75, 238, 120, 135, 176, 47, 21, 165, 222, 212, 142, 189, 224, 85, 253, 238, 239, 216, 212, 197, 98, 166, 220, 105, 69, 34, 69, 167, 26, 250, 161, 83, 99, 159, 55, 127, 112, 208, 184, 172, 62, 70, 65, 246, 120, 198, 193, 6, 39, 246, 114, 134 }, "Admin" });
+                values: new object[] { 1, "admin@gmail.com", new byte[] { 179, 89, 126, 101, 155, 38, 85, 8, 219, 209, 215, 47, 3, 137, 54, 103, 167, 193, 70, 54, 227, 31, 8, 20, 99, 121, 28, 154, 90, 107, 152, 38, 50, 211, 236, 197, 232, 200, 154, 254, 38, 123, 221, 168, 222, 61, 146, 47, 146, 237, 77, 33, 141, 108, 32, 130, 119, 209, 248, 189, 190, 19, 240, 139 }, "Admin", new byte[] { 115, 110, 208, 249, 74, 66, 174, 187, 129, 40, 49, 36, 196, 102, 242, 46, 72, 18, 240, 134, 215, 164, 198, 94, 244, 106, 127, 80, 237, 167, 44, 25, 76, 207, 208, 2, 191, 50, 222, 167, 238, 53, 107, 221, 148, 198, 137, 133, 241, 141, 90, 149, 108, 102, 113, 183, 107, 138, 248, 243, 124, 243, 163, 53, 117, 50, 108, 157, 225, 179, 225, 147, 186, 105, 171, 201, 60, 79, 12, 193, 224, 136, 52, 128, 56, 63, 10, 179, 64, 254, 194, 142, 111, 136, 141, 194, 25, 217, 210, 157, 160, 233, 180, 199, 32, 120, 215, 61, 34, 136, 2, 106, 169, 110, 218, 145, 250, 209, 175, 200, 209, 52, 234, 112, 173, 129, 50, 162 }, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Videos",
@@ -582,23 +604,23 @@ namespace jap_task2_backend.Migrations
                 values: new object[,]
                 {
                     { 84, 22, 220f, "Screening 84", new DateTime(2012, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 84 },
-                    { 75, 13, 100f, "Screening 75", new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6972), 5, 75 },
-                    { 10, 4, 200f, "Screening 10", new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6763), 4, 10 },
-                    { 85, 11, 300f, "Screening 85", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6996), 7, 85 },
-                    { 76, 14, 400f, "Screening 76", new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6975), 4, 76 },
+                    { 75, 13, 100f, "Screening 75", new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1922), 5, 75 },
+                    { 10, 4, 200f, "Screening 10", new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1729), 4, 10 },
+                    { 85, 11, 300f, "Screening 85", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1942), 7, 85 },
+                    { 76, 14, 400f, "Screening 76", new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1925), 4, 76 },
                     { 11, 10, 210f, "Screening 11", new DateTime(2010, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 11 },
-                    { 77, 15, 500f, "Screening 77", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6978), 3, 77 },
+                    { 77, 15, 500f, "Screening 77", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1927), 3, 77 },
                     { 83, 10, 210f, "Screening 83", new DateTime(2010, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 83 },
-                    { 82, 4, 200f, "Screening 82", new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6991), 4, 82 },
-                    { 81, 102, 310f, "Screening 81", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6988), 2, 81 },
+                    { 82, 4, 200f, "Screening 82", new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1938), 4, 82 },
+                    { 81, 102, 310f, "Screening 81", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1936), 2, 81 },
                     { 78, 16, 320f, "Screening 78", new DateTime(2015, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 78 },
                     { 12, 22, 220f, "Screening 12", new DateTime(2012, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 12 },
-                    { 13, 11, 300f, "Screening 13", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6768), 7, 13 },
-                    { 79, 10, 40f, "Screening 79", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6982), 2, 79 },
-                    { 14, 12, 200f, "Screening 14", new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6771), 6, 14 },
-                    { 80, 19, 50f, "Screening 80", new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6985), 2, 80 },
-                    { 89, 15, 500f, "Screening 89", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7007), 3, 89 },
-                    { 9, 102, 310f, "Screening 9", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6761), 2, 9 },
+                    { 13, 11, 300f, "Screening 13", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1733), 7, 13 },
+                    { 79, 10, 40f, "Screening 79", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1930), 2, 79 },
+                    { 14, 12, 200f, "Screening 14", new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1736), 6, 14 },
+                    { 80, 19, 50f, "Screening 80", new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1933), 2, 80 },
+                    { 89, 15, 500f, "Screening 89", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1952), 3, 89 },
+                    { 9, 102, 310f, "Screening 9", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1726), 2, 9 },
                     { 104, 22, 120f, "Screening 104", new DateTime(2015, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 22, 104 },
                     { 103, 22, 220f, "Screening 103", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 100 },
                     { 102, 22, 220f, "Screening 102", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 100 },
@@ -611,48 +633,48 @@ namespace jap_task2_backend.Migrations
                 columns: new[] { "Id", "AvailableTickets", "Duration", "Name", "ScreeningDate", "SoldTickets", "VideoId" },
                 values: new object[,]
                 {
-                    { 1, 11, 300f, "Screening 1", new DateTime(2021, 10, 8, 17, 5, 57, 669, DateTimeKind.Local).AddTicks(7165), 7, 1 },
-                    { 2, 12, 200f, "Screening 2", new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6713), 6, 2 },
+                    { 1, 11, 300f, "Screening 1", new DateTime(2021, 10, 8, 17, 57, 36, 239, DateTimeKind.Local).AddTicks(2778), 7, 1 },
+                    { 2, 12, 200f, "Screening 2", new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1679), 6, 2 },
                     { 99, 10, 210f, "Screening 99", new DateTime(2010, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 99 },
-                    { 3, 13, 100f, "Screening 3", new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6742), 5, 3 },
-                    { 98, 4, 200f, "Screening 98", new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7027), 4, 98 },
-                    { 97, 102, 310f, "Screening 97", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7024), 2, 97 },
-                    { 4, 14, 400f, "Screening 4", new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6747), 4, 4 },
+                    { 3, 13, 100f, "Screening 3", new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1710), 5, 3 },
+                    { 98, 4, 200f, "Screening 98", new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1971), 4, 98 },
+                    { 97, 102, 310f, "Screening 97", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1968), 2, 97 },
+                    { 4, 14, 400f, "Screening 4", new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1714), 4, 4 },
                     { 96, 22, 220f, "Screening 96", new DateTime(2012, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 96 },
                     { 95, 10, 210f, "Screening 95", new DateTime(2010, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 95 },
-                    { 5, 15, 500f, "Screening 5", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6750), 3, 5 },
-                    { 94, 4, 200f, "Screening 94", new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7019), 4, 94 },
-                    { 93, 102, 310f, "Screening 93", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7016), 2, 93 },
+                    { 5, 15, 500f, "Screening 5", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1717), 3, 5 },
+                    { 94, 4, 200f, "Screening 94", new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1964), 4, 94 },
+                    { 93, 102, 310f, "Screening 93", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1962), 2, 93 },
                     { 6, 16, 320f, "Screening 6", new DateTime(2015, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 6 },
-                    { 92, 19, 50f, "Screening 92", new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7013), 2, 92 },
-                    { 91, 10, 40f, "Screening 91", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7010), 2, 91 },
-                    { 7, 10, 40f, "Screening 7", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6754), 2, 7 },
+                    { 92, 19, 50f, "Screening 92", new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1959), 2, 92 },
+                    { 91, 10, 40f, "Screening 91", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1956), 2, 91 },
+                    { 7, 10, 40f, "Screening 7", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1721), 2, 7 },
                     { 90, 16, 320f, "Screening 90", new DateTime(2015, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 90 },
-                    { 8, 19, 50f, "Screening 8", new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6758), 2, 8 },
-                    { 88, 14, 400f, "Screening 88", new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7004), 4, 88 },
-                    { 87, 13, 100f, "Screening 87", new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7001), 5, 87 },
-                    { 86, 12, 200f, "Screening 86", new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6998), 6, 86 },
-                    { 15, 13, 100f, "Screening 15", new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6826), 5, 15 },
+                    { 8, 19, 50f, "Screening 8", new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1724), 2, 8 },
+                    { 88, 14, 400f, "Screening 88", new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1949), 4, 88 },
+                    { 87, 13, 100f, "Screening 87", new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1947), 5, 87 },
+                    { 86, 12, 200f, "Screening 86", new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1945), 6, 86 },
+                    { 15, 13, 100f, "Screening 15", new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1739), 5, 15 },
                     { 35, 10, 210f, "Screening 35", new DateTime(2010, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 35 },
-                    { 73, 11, 300f, "Screening 73", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6967), 7, 73 },
-                    { 52, 14, 400f, "Screening 52", new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6918), 4, 52 },
-                    { 26, 12, 200f, "Screening 26", new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6853), 6, 26 },
-                    { 51, 13, 100f, "Screening 51", new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6915), 5, 51 },
-                    { 50, 12, 200f, "Screening 50", new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6912), 6, 50 },
-                    { 27, 13, 100f, "Screening 27", new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6856), 5, 27 },
-                    { 49, 11, 300f, "Screening 49", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6909), 7, 49 },
+                    { 73, 11, 300f, "Screening 73", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1917), 7, 73 },
+                    { 52, 14, 400f, "Screening 52", new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1873), 4, 52 },
+                    { 26, 12, 200f, "Screening 26", new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1761), 6, 26 },
+                    { 51, 13, 100f, "Screening 51", new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1870), 5, 51 },
+                    { 50, 12, 200f, "Screening 50", new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1867), 6, 50 },
+                    { 27, 13, 100f, "Screening 27", new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1817), 5, 27 },
+                    { 49, 11, 300f, "Screening 49", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1864), 7, 49 },
                     { 48, 22, 220f, "Screening 48", new DateTime(2012, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 48 },
-                    { 28, 14, 400f, "Screening 28", new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6859), 4, 28 },
+                    { 28, 14, 400f, "Screening 28", new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1821), 4, 28 },
                     { 47, 10, 210f, "Screening 47", new DateTime(2010, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 47 },
-                    { 46, 4, 200f, "Screening 46", new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6904), 4, 46 },
-                    { 29, 15, 500f, "Screening 29", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6862), 3, 29 },
-                    { 45, 102, 310f, "Screening 45", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6901), 2, 45 },
+                    { 46, 4, 200f, "Screening 46", new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1860), 4, 46 },
+                    { 29, 15, 500f, "Screening 29", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1823), 3, 29 },
+                    { 45, 102, 310f, "Screening 45", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1858), 2, 45 },
                     { 105, 22, 100f, "Screening 105", new DateTime(2021, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 105 },
-                    { 44, 19, 50f, "Screening 44", new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6898), 2, 44 },
-                    { 43, 10, 40f, "Screening 43", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6895), 2, 43 },
+                    { 44, 19, 50f, "Screening 44", new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1855), 2, 44 },
+                    { 43, 10, 40f, "Screening 43", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1852), 2, 43 },
                     { 42, 16, 320f, "Screening 42", new DateTime(2015, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 42 },
-                    { 31, 10, 40f, "Screening 31", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6865), 2, 31 },
-                    { 41, 15, 500f, "Screening 41", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6892), 3, 41 }
+                    { 31, 10, 40f, "Screening 31", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1827), 2, 31 },
+                    { 41, 15, 500f, "Screening 41", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1849), 3, 41 }
                 });
 
             migrationBuilder.InsertData(
@@ -660,46 +682,46 @@ namespace jap_task2_backend.Migrations
                 columns: new[] { "Id", "AvailableTickets", "Duration", "Name", "ScreeningDate", "SoldTickets", "VideoId" },
                 values: new object[,]
                 {
-                    { 40, 14, 400f, "Screening 40", new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6889), 4, 40 },
-                    { 32, 19, 50f, "Screening 32", new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6869), 2, 32 },
-                    { 39, 13, 100f, "Screening 39", new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6886), 5, 39 },
-                    { 38, 12, 200f, "Screening 38", new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6883), 6, 38 },
-                    { 33, 102, 310f, "Screening 33", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6872), 2, 33 },
-                    { 37, 11, 300f, "Screening 37", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6880), 7, 37 },
+                    { 40, 14, 400f, "Screening 40", new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1846), 4, 40 },
+                    { 32, 19, 50f, "Screening 32", new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1830), 2, 32 },
+                    { 39, 13, 100f, "Screening 39", new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1844), 5, 39 },
+                    { 38, 12, 200f, "Screening 38", new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1841), 6, 38 },
+                    { 33, 102, 310f, "Screening 33", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1832), 2, 33 },
+                    { 37, 11, 300f, "Screening 37", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1839), 7, 37 },
                     { 36, 22, 220f, "Screening 36", new DateTime(2012, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 36 },
-                    { 34, 4, 200f, "Screening 34", new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6875), 4, 34 },
+                    { 34, 4, 200f, "Screening 34", new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1835), 4, 34 },
                     { 30, 16, 320f, "Screening 30", new DateTime(2015, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 30 },
-                    { 53, 15, 500f, "Screening 53", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6921), 3, 53 },
+                    { 53, 15, 500f, "Screening 53", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1875), 3, 53 },
                     { 54, 16, 320f, "Screening 54", new DateTime(2015, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 54 },
-                    { 25, 11, 300f, "Screening 25", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6850), 7, 25 },
-                    { 16, 14, 400f, "Screening 16", new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6829), 4, 16 },
+                    { 25, 11, 300f, "Screening 25", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1759), 7, 25 },
+                    { 16, 14, 400f, "Screening 16", new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1742), 4, 16 },
                     { 72, 22, 220f, "Screening 72", new DateTime(2012, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 72 },
                     { 71, 10, 210f, "Screening 71", new DateTime(2010, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 71 },
-                    { 17, 15, 500f, "Screening 17", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6832), 3, 17 },
-                    { 70, 4, 200f, "Screening 70", new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6963), 4, 70 },
-                    { 69, 102, 310f, "Screening 69", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6960), 2, 69 },
+                    { 17, 15, 500f, "Screening 17", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1744), 3, 17 },
+                    { 70, 4, 200f, "Screening 70", new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1913), 4, 70 },
+                    { 69, 102, 310f, "Screening 69", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1910), 2, 69 },
                     { 18, 16, 320f, "Screening 18", new DateTime(2015, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 18 },
-                    { 68, 19, 50f, "Screening 68", new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6957), 2, 68 },
-                    { 67, 10, 40f, "Screening 67", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6954), 2, 67 },
-                    { 19, 10, 40f, "Screening 19", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6837), 2, 19 },
+                    { 68, 19, 50f, "Screening 68", new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1908), 2, 68 },
+                    { 67, 10, 40f, "Screening 67", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1905), 2, 67 },
+                    { 19, 10, 40f, "Screening 19", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1747), 2, 19 },
                     { 66, 16, 320f, "Screening 66", new DateTime(2015, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 66 },
-                    { 65, 15, 500f, "Screening 65", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6951), 3, 65 },
-                    { 20, 19, 50f, "Screening 20", new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6840), 2, 20 },
-                    { 64, 14, 400f, "Screening 64", new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6948), 4, 64 },
-                    { 63, 13, 100f, "Screening 63", new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6944), 5, 63 },
-                    { 21, 102, 310f, "Screening 21", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6843), 2, 21 },
-                    { 62, 12, 200f, "Screening 62", new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6941), 6, 62 },
-                    { 61, 11, 300f, "Screening 61", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6939), 7, 61 },
-                    { 22, 4, 200f, "Screening 22", new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6845), 4, 22 },
+                    { 65, 15, 500f, "Screening 65", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1902), 3, 65 },
+                    { 20, 19, 50f, "Screening 20", new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1750), 2, 20 },
+                    { 64, 14, 400f, "Screening 64", new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1899), 4, 64 },
+                    { 63, 13, 100f, "Screening 63", new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1897), 5, 63 },
+                    { 21, 102, 310f, "Screening 21", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1752), 2, 21 },
+                    { 62, 12, 200f, "Screening 62", new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1894), 6, 62 },
+                    { 61, 11, 300f, "Screening 61", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1891), 7, 61 },
+                    { 22, 4, 200f, "Screening 22", new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1755), 4, 22 },
                     { 60, 22, 220f, "Screening 60", new DateTime(2012, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 60 },
                     { 59, 10, 210f, "Screening 59", new DateTime(2010, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 59 },
                     { 23, 10, 210f, "Screening 23", new DateTime(2010, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 23 },
-                    { 58, 4, 200f, "Screening 58", new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6934), 4, 58 },
-                    { 57, 102, 310f, "Screening 57", new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6931), 2, 57 },
+                    { 58, 4, 200f, "Screening 58", new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1887), 4, 58 },
+                    { 57, 102, 310f, "Screening 57", new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1884), 2, 57 },
                     { 24, 22, 220f, "Screening 24", new DateTime(2012, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, 24 },
-                    { 56, 19, 50f, "Screening 56", new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6928), 2, 56 },
-                    { 55, 10, 40f, "Screening 55", new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6925), 2, 55 },
-                    { 74, 12, 200f, "Screening 74", new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6970), 6, 74 },
+                    { 56, 19, 50f, "Screening 56", new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1881), 2, 56 },
+                    { 55, 10, 40f, "Screening 55", new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1878), 2, 55 },
+                    { 74, 12, 200f, "Screening 74", new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1919), 6, 74 },
                     { 106, 22, 90f, "Screening 106", new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 11, 106 }
                 });
 
@@ -1138,7 +1160,7 @@ namespace jap_task2_backend.Migrations
             string getTop10MoviesWithMostRatings = @"CREATE PROCEDURE getTop10MoviesWithMostRatings
                                                      AS
                                                      BEGIN
-	                                                    SELECT TOP(10) v.Id as Id, v.Id as MovieId, v.Title as MovieName, COUNT(r.Value) AS NumberOfRatings, AVG(r.Value) AS AverageRating
+	                                                    SELECT TOP(10) v.Id as MovieId, v.Title as MovieName, COUNT(r.Value) AS NumberOfRatings, AVG(r.Value) AS AverageRating
 	                                                    FROM videos v, ratings r
 	                                                    WHERE v.Id = r.VideoId AND TYPE = 0
 	                                                    GROUP BY v.Id, v.Title
@@ -1150,12 +1172,12 @@ namespace jap_task2_backend.Migrations
                                                         @end_date Date
                                                         AS
                                                         BEGIN
-	                                                        SELECT TOP(10) v.Id, v.Title, s.Name, COUNT(s.Id) AS NumberOfScreenings
+	                                                        SELECT TOP(10) v.Id as MovieId, v.Title as MovieName, COUNT(s.Id) AS NumberOfScreenings
 	                                                        FROM Videos v, Screenings s
 	                                                        WHERE v.Id = s.VideoId AND v.TYPE = 0 
 	                                                        AND @start_date <= DATEADD(MINUTE, s.Duration, s.ScreeningDate) 
 	                                                        AND DATEADD(MINUTE, s.Duration, s.ScreeningDate) <= @end_date
-	                                                        GROUP BY v.Id, v.Title, s.Name
+	                                                        GROUP BY v.Id, v.Title
 	                                                        ORDER BY COUNT(s.Id) DESC
                                                         END;";
 
@@ -1168,6 +1190,7 @@ namespace jap_task2_backend.Migrations
 		                                                               FROM Ratings r 
 		                                                               WHERE r.VideoId = v.Id) = 0 
 	                                                            AND v.Id = s.VideoId
+                                                                AND v.Type = 0
 	                                                            ORDER BY s.SoldTickets DESC
                                                             END;";
 
@@ -1191,6 +1214,12 @@ namespace jap_task2_backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "MostRatedMoviesReports");
+
+            migrationBuilder.DropTable(
+                name: "MoviesWithMostScreeningsReports");
+
+            migrationBuilder.DropTable(
+                name: "MoviesWithMostSoldTicketsReports");
 
             migrationBuilder.DropTable(
                 name: "Ratings");
@@ -1217,7 +1246,7 @@ namespace jap_task2_backend.Migrations
             migrationBuilder.Sql(getTop10MoviesWithMostRatings);
             migrationBuilder.Sql(getTop10MoviesWithMostScreenings);
             migrationBuilder.Sql(getMoviesWithMostSoldTicketsNoRating);
-
+            
         }
     }
 }

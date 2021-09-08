@@ -10,7 +10,7 @@ using jap_task2_backend.Data;
 namespace jap_task2_backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210908150558_InitialMigration")]
+    [Migration("20210908155736_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -610,13 +610,8 @@ namespace jap_task2_backend.Migrations
 
             modelBuilder.Entity("jap_task2_backend.Models.MostRatedMoviesReport", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AverageRating")
-                        .HasColumnType("int");
+                    b.Property<double>("AverageRating")
+                        .HasColumnType("float");
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
@@ -627,9 +622,38 @@ namespace jap_task2_backend.Migrations
                     b.Property<int>("NumberOfRatings")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
                     b.ToTable("MostRatedMoviesReports");
+                });
+
+            modelBuilder.Entity("jap_task2_backend.Models.MoviesWithMostScreeningsReport", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MovieName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfScreenings")
+                        .HasColumnType("int");
+
+                    b.ToTable("MoviesWithMostScreeningsReports");
+                });
+
+            modelBuilder.Entity("jap_task2_backend.Models.MoviesWithMostSoldTicketsReport", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MovieName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ScreeningName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SoldTickets")
+                        .HasColumnType("int");
+
+                    b.ToTable("MoviesWithMostSoldTicketsReports");
                 });
 
             modelBuilder.Entity("jap_task2_backend.Models.Rating", b =>
@@ -1418,7 +1442,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 11,
                             Duration = 300f,
                             Name = "Screening 1",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 669, DateTimeKind.Local).AddTicks(7165),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 239, DateTimeKind.Local).AddTicks(2778),
                             SoldTickets = 7,
                             VideoId = 1
                         },
@@ -1428,7 +1452,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 12,
                             Duration = 200f,
                             Name = "Screening 2",
-                            ScreeningDate = new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6713),
+                            ScreeningDate = new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1679),
                             SoldTickets = 6,
                             VideoId = 2
                         },
@@ -1438,7 +1462,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 13,
                             Duration = 100f,
                             Name = "Screening 3",
-                            ScreeningDate = new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6742),
+                            ScreeningDate = new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1710),
                             SoldTickets = 5,
                             VideoId = 3
                         },
@@ -1448,7 +1472,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 14,
                             Duration = 400f,
                             Name = "Screening 4",
-                            ScreeningDate = new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6747),
+                            ScreeningDate = new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1714),
                             SoldTickets = 4,
                             VideoId = 4
                         },
@@ -1458,7 +1482,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 15,
                             Duration = 500f,
                             Name = "Screening 5",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6750),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1717),
                             SoldTickets = 3,
                             VideoId = 5
                         },
@@ -1478,7 +1502,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 10,
                             Duration = 40f,
                             Name = "Screening 7",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6754),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1721),
                             SoldTickets = 2,
                             VideoId = 7
                         },
@@ -1488,7 +1512,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 19,
                             Duration = 50f,
                             Name = "Screening 8",
-                            ScreeningDate = new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6758),
+                            ScreeningDate = new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1724),
                             SoldTickets = 2,
                             VideoId = 8
                         },
@@ -1498,7 +1522,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 102,
                             Duration = 310f,
                             Name = "Screening 9",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6761),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1726),
                             SoldTickets = 2,
                             VideoId = 9
                         },
@@ -1508,7 +1532,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 4,
                             Duration = 200f,
                             Name = "Screening 10",
-                            ScreeningDate = new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6763),
+                            ScreeningDate = new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1729),
                             SoldTickets = 4,
                             VideoId = 10
                         },
@@ -1538,7 +1562,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 11,
                             Duration = 300f,
                             Name = "Screening 13",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6768),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1733),
                             SoldTickets = 7,
                             VideoId = 13
                         },
@@ -1548,7 +1572,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 12,
                             Duration = 200f,
                             Name = "Screening 14",
-                            ScreeningDate = new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6771),
+                            ScreeningDate = new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1736),
                             SoldTickets = 6,
                             VideoId = 14
                         },
@@ -1558,7 +1582,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 13,
                             Duration = 100f,
                             Name = "Screening 15",
-                            ScreeningDate = new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6826),
+                            ScreeningDate = new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1739),
                             SoldTickets = 5,
                             VideoId = 15
                         },
@@ -1568,7 +1592,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 14,
                             Duration = 400f,
                             Name = "Screening 16",
-                            ScreeningDate = new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6829),
+                            ScreeningDate = new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1742),
                             SoldTickets = 4,
                             VideoId = 16
                         },
@@ -1578,7 +1602,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 15,
                             Duration = 500f,
                             Name = "Screening 17",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6832),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1744),
                             SoldTickets = 3,
                             VideoId = 17
                         },
@@ -1598,7 +1622,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 10,
                             Duration = 40f,
                             Name = "Screening 19",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6837),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1747),
                             SoldTickets = 2,
                             VideoId = 19
                         },
@@ -1608,7 +1632,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 19,
                             Duration = 50f,
                             Name = "Screening 20",
-                            ScreeningDate = new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6840),
+                            ScreeningDate = new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1750),
                             SoldTickets = 2,
                             VideoId = 20
                         },
@@ -1618,7 +1642,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 102,
                             Duration = 310f,
                             Name = "Screening 21",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6843),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1752),
                             SoldTickets = 2,
                             VideoId = 21
                         },
@@ -1628,7 +1652,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 4,
                             Duration = 200f,
                             Name = "Screening 22",
-                            ScreeningDate = new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6845),
+                            ScreeningDate = new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1755),
                             SoldTickets = 4,
                             VideoId = 22
                         },
@@ -1658,7 +1682,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 11,
                             Duration = 300f,
                             Name = "Screening 25",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6850),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1759),
                             SoldTickets = 7,
                             VideoId = 25
                         },
@@ -1668,7 +1692,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 12,
                             Duration = 200f,
                             Name = "Screening 26",
-                            ScreeningDate = new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6853),
+                            ScreeningDate = new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1761),
                             SoldTickets = 6,
                             VideoId = 26
                         },
@@ -1678,7 +1702,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 13,
                             Duration = 100f,
                             Name = "Screening 27",
-                            ScreeningDate = new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6856),
+                            ScreeningDate = new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1817),
                             SoldTickets = 5,
                             VideoId = 27
                         },
@@ -1688,7 +1712,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 14,
                             Duration = 400f,
                             Name = "Screening 28",
-                            ScreeningDate = new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6859),
+                            ScreeningDate = new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1821),
                             SoldTickets = 4,
                             VideoId = 28
                         },
@@ -1698,7 +1722,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 15,
                             Duration = 500f,
                             Name = "Screening 29",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6862),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1823),
                             SoldTickets = 3,
                             VideoId = 29
                         },
@@ -1718,7 +1742,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 10,
                             Duration = 40f,
                             Name = "Screening 31",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6865),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1827),
                             SoldTickets = 2,
                             VideoId = 31
                         },
@@ -1728,7 +1752,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 19,
                             Duration = 50f,
                             Name = "Screening 32",
-                            ScreeningDate = new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6869),
+                            ScreeningDate = new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1830),
                             SoldTickets = 2,
                             VideoId = 32
                         },
@@ -1738,7 +1762,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 102,
                             Duration = 310f,
                             Name = "Screening 33",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6872),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1832),
                             SoldTickets = 2,
                             VideoId = 33
                         },
@@ -1748,7 +1772,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 4,
                             Duration = 200f,
                             Name = "Screening 34",
-                            ScreeningDate = new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6875),
+                            ScreeningDate = new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1835),
                             SoldTickets = 4,
                             VideoId = 34
                         },
@@ -1778,7 +1802,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 11,
                             Duration = 300f,
                             Name = "Screening 37",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6880),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1839),
                             SoldTickets = 7,
                             VideoId = 37
                         },
@@ -1788,7 +1812,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 12,
                             Duration = 200f,
                             Name = "Screening 38",
-                            ScreeningDate = new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6883),
+                            ScreeningDate = new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1841),
                             SoldTickets = 6,
                             VideoId = 38
                         },
@@ -1798,7 +1822,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 13,
                             Duration = 100f,
                             Name = "Screening 39",
-                            ScreeningDate = new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6886),
+                            ScreeningDate = new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1844),
                             SoldTickets = 5,
                             VideoId = 39
                         },
@@ -1808,7 +1832,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 14,
                             Duration = 400f,
                             Name = "Screening 40",
-                            ScreeningDate = new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6889),
+                            ScreeningDate = new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1846),
                             SoldTickets = 4,
                             VideoId = 40
                         },
@@ -1818,7 +1842,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 15,
                             Duration = 500f,
                             Name = "Screening 41",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6892),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1849),
                             SoldTickets = 3,
                             VideoId = 41
                         },
@@ -1838,7 +1862,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 10,
                             Duration = 40f,
                             Name = "Screening 43",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6895),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1852),
                             SoldTickets = 2,
                             VideoId = 43
                         },
@@ -1848,7 +1872,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 19,
                             Duration = 50f,
                             Name = "Screening 44",
-                            ScreeningDate = new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6898),
+                            ScreeningDate = new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1855),
                             SoldTickets = 2,
                             VideoId = 44
                         },
@@ -1858,7 +1882,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 102,
                             Duration = 310f,
                             Name = "Screening 45",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6901),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1858),
                             SoldTickets = 2,
                             VideoId = 45
                         },
@@ -1868,7 +1892,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 4,
                             Duration = 200f,
                             Name = "Screening 46",
-                            ScreeningDate = new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6904),
+                            ScreeningDate = new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1860),
                             SoldTickets = 4,
                             VideoId = 46
                         },
@@ -1898,7 +1922,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 11,
                             Duration = 300f,
                             Name = "Screening 49",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6909),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1864),
                             SoldTickets = 7,
                             VideoId = 49
                         },
@@ -1908,7 +1932,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 12,
                             Duration = 200f,
                             Name = "Screening 50",
-                            ScreeningDate = new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6912),
+                            ScreeningDate = new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1867),
                             SoldTickets = 6,
                             VideoId = 50
                         },
@@ -1918,7 +1942,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 13,
                             Duration = 100f,
                             Name = "Screening 51",
-                            ScreeningDate = new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6915),
+                            ScreeningDate = new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1870),
                             SoldTickets = 5,
                             VideoId = 51
                         },
@@ -1928,7 +1952,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 14,
                             Duration = 400f,
                             Name = "Screening 52",
-                            ScreeningDate = new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6918),
+                            ScreeningDate = new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1873),
                             SoldTickets = 4,
                             VideoId = 52
                         },
@@ -1938,7 +1962,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 15,
                             Duration = 500f,
                             Name = "Screening 53",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6921),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1875),
                             SoldTickets = 3,
                             VideoId = 53
                         },
@@ -1958,7 +1982,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 10,
                             Duration = 40f,
                             Name = "Screening 55",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6925),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1878),
                             SoldTickets = 2,
                             VideoId = 55
                         },
@@ -1968,7 +1992,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 19,
                             Duration = 50f,
                             Name = "Screening 56",
-                            ScreeningDate = new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6928),
+                            ScreeningDate = new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1881),
                             SoldTickets = 2,
                             VideoId = 56
                         },
@@ -1978,7 +2002,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 102,
                             Duration = 310f,
                             Name = "Screening 57",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6931),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1884),
                             SoldTickets = 2,
                             VideoId = 57
                         },
@@ -1988,7 +2012,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 4,
                             Duration = 200f,
                             Name = "Screening 58",
-                            ScreeningDate = new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6934),
+                            ScreeningDate = new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1887),
                             SoldTickets = 4,
                             VideoId = 58
                         },
@@ -2018,7 +2042,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 11,
                             Duration = 300f,
                             Name = "Screening 61",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6939),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1891),
                             SoldTickets = 7,
                             VideoId = 61
                         },
@@ -2028,7 +2052,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 12,
                             Duration = 200f,
                             Name = "Screening 62",
-                            ScreeningDate = new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6941),
+                            ScreeningDate = new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1894),
                             SoldTickets = 6,
                             VideoId = 62
                         },
@@ -2038,7 +2062,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 13,
                             Duration = 100f,
                             Name = "Screening 63",
-                            ScreeningDate = new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6944),
+                            ScreeningDate = new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1897),
                             SoldTickets = 5,
                             VideoId = 63
                         },
@@ -2048,7 +2072,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 14,
                             Duration = 400f,
                             Name = "Screening 64",
-                            ScreeningDate = new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6948),
+                            ScreeningDate = new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1899),
                             SoldTickets = 4,
                             VideoId = 64
                         },
@@ -2058,7 +2082,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 15,
                             Duration = 500f,
                             Name = "Screening 65",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6951),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1902),
                             SoldTickets = 3,
                             VideoId = 65
                         },
@@ -2078,7 +2102,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 10,
                             Duration = 40f,
                             Name = "Screening 67",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6954),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1905),
                             SoldTickets = 2,
                             VideoId = 67
                         },
@@ -2088,7 +2112,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 19,
                             Duration = 50f,
                             Name = "Screening 68",
-                            ScreeningDate = new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6957),
+                            ScreeningDate = new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1908),
                             SoldTickets = 2,
                             VideoId = 68
                         },
@@ -2098,7 +2122,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 102,
                             Duration = 310f,
                             Name = "Screening 69",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6960),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1910),
                             SoldTickets = 2,
                             VideoId = 69
                         },
@@ -2108,7 +2132,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 4,
                             Duration = 200f,
                             Name = "Screening 70",
-                            ScreeningDate = new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6963),
+                            ScreeningDate = new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1913),
                             SoldTickets = 4,
                             VideoId = 70
                         },
@@ -2138,7 +2162,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 11,
                             Duration = 300f,
                             Name = "Screening 73",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6967),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1917),
                             SoldTickets = 7,
                             VideoId = 73
                         },
@@ -2148,7 +2172,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 12,
                             Duration = 200f,
                             Name = "Screening 74",
-                            ScreeningDate = new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6970),
+                            ScreeningDate = new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1919),
                             SoldTickets = 6,
                             VideoId = 74
                         },
@@ -2158,7 +2182,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 13,
                             Duration = 100f,
                             Name = "Screening 75",
-                            ScreeningDate = new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6972),
+                            ScreeningDate = new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1922),
                             SoldTickets = 5,
                             VideoId = 75
                         },
@@ -2168,7 +2192,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 14,
                             Duration = 400f,
                             Name = "Screening 76",
-                            ScreeningDate = new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6975),
+                            ScreeningDate = new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1925),
                             SoldTickets = 4,
                             VideoId = 76
                         },
@@ -2178,7 +2202,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 15,
                             Duration = 500f,
                             Name = "Screening 77",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6978),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1927),
                             SoldTickets = 3,
                             VideoId = 77
                         },
@@ -2198,7 +2222,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 10,
                             Duration = 40f,
                             Name = "Screening 79",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6982),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1930),
                             SoldTickets = 2,
                             VideoId = 79
                         },
@@ -2208,7 +2232,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 19,
                             Duration = 50f,
                             Name = "Screening 80",
-                            ScreeningDate = new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6985),
+                            ScreeningDate = new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1933),
                             SoldTickets = 2,
                             VideoId = 80
                         },
@@ -2218,7 +2242,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 102,
                             Duration = 310f,
                             Name = "Screening 81",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6988),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1936),
                             SoldTickets = 2,
                             VideoId = 81
                         },
@@ -2228,7 +2252,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 4,
                             Duration = 200f,
                             Name = "Screening 82",
-                            ScreeningDate = new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6991),
+                            ScreeningDate = new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1938),
                             SoldTickets = 4,
                             VideoId = 82
                         },
@@ -2258,7 +2282,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 11,
                             Duration = 300f,
                             Name = "Screening 85",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6996),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1942),
                             SoldTickets = 7,
                             VideoId = 85
                         },
@@ -2268,7 +2292,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 12,
                             Duration = 200f,
                             Name = "Screening 86",
-                            ScreeningDate = new DateTime(2021, 9, 28, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(6998),
+                            ScreeningDate = new DateTime(2021, 9, 28, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1945),
                             SoldTickets = 6,
                             VideoId = 86
                         },
@@ -2278,7 +2302,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 13,
                             Duration = 100f,
                             Name = "Screening 87",
-                            ScreeningDate = new DateTime(2021, 9, 18, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7001),
+                            ScreeningDate = new DateTime(2021, 9, 18, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1947),
                             SoldTickets = 5,
                             VideoId = 87
                         },
@@ -2288,7 +2312,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 14,
                             Duration = 400f,
                             Name = "Screening 88",
-                            ScreeningDate = new DateTime(2021, 9, 13, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7004),
+                            ScreeningDate = new DateTime(2021, 9, 13, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1949),
                             SoldTickets = 4,
                             VideoId = 88
                         },
@@ -2298,7 +2322,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 15,
                             Duration = 500f,
                             Name = "Screening 89",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7007),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1952),
                             SoldTickets = 3,
                             VideoId = 89
                         },
@@ -2318,7 +2342,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 10,
                             Duration = 40f,
                             Name = "Screening 91",
-                            ScreeningDate = new DateTime(2021, 10, 8, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7010),
+                            ScreeningDate = new DateTime(2021, 10, 8, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1956),
                             SoldTickets = 2,
                             VideoId = 91
                         },
@@ -2328,7 +2352,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 19,
                             Duration = 50f,
                             Name = "Screening 92",
-                            ScreeningDate = new DateTime(2021, 10, 7, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7013),
+                            ScreeningDate = new DateTime(2021, 10, 7, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1959),
                             SoldTickets = 2,
                             VideoId = 92
                         },
@@ -2338,7 +2362,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 102,
                             Duration = 310f,
                             Name = "Screening 93",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7016),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1962),
                             SoldTickets = 2,
                             VideoId = 93
                         },
@@ -2348,7 +2372,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 4,
                             Duration = 200f,
                             Name = "Screening 94",
-                            ScreeningDate = new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7019),
+                            ScreeningDate = new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1964),
                             SoldTickets = 4,
                             VideoId = 94
                         },
@@ -2378,7 +2402,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 102,
                             Duration = 310f,
                             Name = "Screening 97",
-                            ScreeningDate = new DateTime(2021, 9, 9, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7024),
+                            ScreeningDate = new DateTime(2021, 9, 9, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1968),
                             SoldTickets = 2,
                             VideoId = 97
                         },
@@ -2388,7 +2412,7 @@ namespace jap_task2_backend.Migrations
                             AvailableTickets = 4,
                             Duration = 200f,
                             Name = "Screening 98",
-                            ScreeningDate = new DateTime(2021, 9, 29, 17, 5, 57, 671, DateTimeKind.Local).AddTicks(7027),
+                            ScreeningDate = new DateTime(2021, 9, 29, 17, 57, 36, 241, DateTimeKind.Local).AddTicks(1971),
                             SoldTickets = 4,
                             VideoId = 98
                         },
@@ -2505,9 +2529,9 @@ namespace jap_task2_backend.Migrations
                         {
                             Id = 1,
                             Email = "admin@gmail.com",
-                            Hash = new byte[] { 34, 121, 97, 12, 233, 158, 2, 73, 173, 129, 26, 114, 163, 91, 197, 39, 216, 192, 197, 195, 117, 37, 47, 92, 90, 182, 35, 0, 22, 169, 195, 226, 96, 92, 32, 255, 74, 154, 7, 94, 77, 49, 95, 40, 201, 75, 255, 125, 224, 22, 238, 21, 11, 26, 97, 191, 216, 69, 235, 186, 213, 240, 151, 27 },
+                            Hash = new byte[] { 179, 89, 126, 101, 155, 38, 85, 8, 219, 209, 215, 47, 3, 137, 54, 103, 167, 193, 70, 54, 227, 31, 8, 20, 99, 121, 28, 154, 90, 107, 152, 38, 50, 211, 236, 197, 232, 200, 154, 254, 38, 123, 221, 168, 222, 61, 146, 47, 146, 237, 77, 33, 141, 108, 32, 130, 119, 209, 248, 189, 190, 19, 240, 139 },
                             Name = "Admin",
-                            Salt = new byte[] { 108, 138, 162, 71, 105, 140, 224, 209, 239, 53, 239, 178, 225, 216, 57, 30, 196, 66, 138, 101, 193, 133, 32, 97, 161, 28, 70, 108, 83, 243, 15, 45, 172, 226, 63, 84, 40, 207, 83, 56, 198, 90, 122, 189, 226, 38, 146, 86, 4, 222, 221, 179, 134, 77, 143, 154, 165, 81, 128, 224, 235, 12, 121, 152, 205, 179, 90, 4, 253, 71, 51, 14, 97, 138, 255, 6, 75, 238, 120, 135, 176, 47, 21, 165, 222, 212, 142, 189, 224, 85, 253, 238, 239, 216, 212, 197, 98, 166, 220, 105, 69, 34, 69, 167, 26, 250, 161, 83, 99, 159, 55, 127, 112, 208, 184, 172, 62, 70, 65, 246, 120, 198, 193, 6, 39, 246, 114, 134 },
+                            Salt = new byte[] { 115, 110, 208, 249, 74, 66, 174, 187, 129, 40, 49, 36, 196, 102, 242, 46, 72, 18, 240, 134, 215, 164, 198, 94, 244, 106, 127, 80, 237, 167, 44, 25, 76, 207, 208, 2, 191, 50, 222, 167, 238, 53, 107, 221, 148, 198, 137, 133, 241, 141, 90, 149, 108, 102, 113, 183, 107, 138, 248, 243, 124, 243, 163, 53, 117, 50, 108, 157, 225, 179, 225, 147, 186, 105, 171, 201, 60, 79, 12, 193, 224, 136, 52, 128, 56, 63, 10, 179, 64, 254, 194, 142, 111, 136, 141, 194, 25, 217, 210, 157, 160, 233, 180, 199, 32, 120, 215, 61, 34, 136, 2, 106, 169, 110, 218, 145, 250, 209, 175, 200, 209, 52, 234, 112, 173, 129, 50, 162 },
                             Surname = "Admin"
                         });
                 });

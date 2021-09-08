@@ -17,6 +17,8 @@ namespace jap_task2_backend.Data
         public DbSet<BoughtTicket> BoughtTickets { get; set; }
         public DbSet<Screening> Screenings { get; set; }
         public DbSet<MostRatedMoviesReport> MostRatedMoviesReports { get; set; }
+        public DbSet<MoviesWithMostScreeningsReport> MoviesWithMostScreeningsReports { get; set; }
+        public DbSet<MoviesWithMostSoldTicketsReport> MoviesWithMostSoldTicketsReports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1324,6 +1326,12 @@ namespace jap_task2_backend.Data
                 new Screening { Id = 106, Name = "Screening 106", VideoId = 106, AvailableTickets = 22, SoldTickets = 11, ScreeningDate = new DateTime(2022, 1, 1, 0, 0, 0, 0), Duration = 90 }
             );
             #endregion
+
+            modelBuilder.Entity<MostRatedMoviesReport>().HasNoKey();
+
+            modelBuilder.Entity<MoviesWithMostScreeningsReport>().HasNoKey();
+
+            modelBuilder.Entity<MoviesWithMostSoldTicketsReport>().HasNoKey();
         }
     }
 }

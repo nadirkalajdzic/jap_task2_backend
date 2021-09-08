@@ -1,8 +1,8 @@
 ﻿using jap_task2_backend.Data;
+using jap_task2_backend.DTO.Reports;
 using jap_task2_backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace jap_task2_backend.Services.ReportsService
@@ -22,6 +22,29 @@ namespace jap_task2_backend.Services.ReportsService
             {
                 Data = await _context.MostRatedMoviesReports.FromSqlRaw("EXEC [dbo].[getTop10MoviesWithMostRatings];")
                                                             .ToListAsync()
+            };
+
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<MoviesWithMostScreeningsReport>>> MoviesWithMostScreeningsReport(DateIntervalDTO dateIntervalDTO)
+        {
+            var serviceResponse = new ServiceResponse<List<MoviesWithMostScreeningsReport>>
+            {
+                Data = await _context.MoviesWithMostScreeningsReports
+                     .FromSqlRaw("EXEC [dbo].[getTop10MoviesWithMostScreenings] {0}, {1};", dateIntervalDTO.StartDate, dateIntervalDTO.EndDate)
+                     .ToListAsync()
+            };
+
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<MoviesWithMostSoldTicketsReport>>> MoviesWithMostSoldTicketsReport()
+        {
+            var serviceResponse = new ServiceResponse<List<MoviesWithMostSoldTicketsReport>>
+            {
+                Data = await _context.MoviesWithMostSoldTicketsReports.FromSqlRaw("EXEC [dbo].[getMoviesWithMostSoldTicketsNoRating]")
+                                                                      .ToListAsync()
             };
 
             return serviceResponse;
