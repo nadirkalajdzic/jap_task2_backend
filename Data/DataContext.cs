@@ -1205,9 +1205,18 @@ namespace jap_task2_backend.Data
                 new Rating { Id = 99, Value = 4.2F, VideoId = 99, UserId = 1 },
                 new Rating { Id = 100, Value = 4.1F, VideoId = 100, UserId = 1 },
                 //   
-                new Rating { Id = 101, Value = 1F, VideoId = 100, UserId = 1 },
-                new Rating { Id = 102, Value = 2.3F, VideoId = 100, UserId = 1 },
-                new Rating { Id = 103, Value = 1.5F, VideoId = 100, UserId = 1 }
+                new Rating { Id = 101, Value = 5F, VideoId = 100, UserId = 1 },
+                new Rating { Id = 102, Value = 5F, VideoId = 100, UserId = 1 },
+                new Rating { Id = 103, Value = 5F, VideoId = 100, UserId = 1 },
+                //
+                new Rating { Id = 104, Value = 5F, VideoId = 10, UserId = 1 },
+                new Rating { Id = 105, Value = 5F, VideoId = 67, UserId = 1 },
+                new Rating { Id = 106, Value = 5F, VideoId = 67, UserId = 1 },
+                new Rating { Id = 107, Value = 5F, VideoId = 44, UserId = 1 },
+                new Rating { Id = 108, Value = 5F, VideoId = 17, UserId = 1 },
+                new Rating { Id = 109, Value = 5F, VideoId = 17, UserId = 1 },
+                //
+                new Rating { Id = 110, Value = 5F, VideoId = 7, UserId = 1 }
             );
             #endregion
 

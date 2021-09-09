@@ -2,6 +2,7 @@ using jap_task2_backend.Data;
 using jap_task2_backend.Services.AuthService;
 using jap_task2_backend.Services.RatingsService;
 using jap_task2_backend.Services.ReportsService;
+using jap_task2_backend.Services.TicketsService;
 using jap_task2_backend.Services.VideosService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -67,6 +68,7 @@ namespace jap_task2_backend
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IRatingsService, RatingsService>();
             services.AddScoped<IReportsService, ReportsService>();
+            services.AddScoped<ITicketsService, TicketsService>();
         }
             
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
