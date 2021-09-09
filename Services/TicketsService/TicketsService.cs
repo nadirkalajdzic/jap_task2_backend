@@ -3,6 +3,7 @@ using jap_task2_backend.DTO.Ticket;
 using jap_task2_backend.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -40,8 +41,12 @@ namespace jap_task2_backend.Services.TicketsService
                 serviceResponse.Success = false;
                 serviceResponse.Data = false;
                 serviceResponse.Message = "Screening does not exist!";
-            } 
-            else if(screening.SoldTickets + buyTicketDTO.NumberOfTickets > screening.AvailableTickets)
+            } else if(screening.ScreeningDate <= DateTime.Now)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Data = false;
+                serviceResponse.Message = "Screening is in the past!";
+            } else if(screening.SoldTickets + buyTicketDTO.NumberOfTickets > screening.AvailableTickets)
             {
                 serviceResponse.Success = false;
                 serviceResponse.Data = false;
