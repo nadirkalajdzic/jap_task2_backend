@@ -31,19 +31,6 @@ namespace NUnitTests
 
             // - add data
 
-            AuthService.CreatePasswordHash("admin", out byte[] passHash, out byte[] passSalt);
-            _context.Users.Add(
-                new User
-                {
-                    Id = 1,
-                    Name = "Admin",
-                    Surname = "Admin",
-                    Email = "admin@gmail.com",
-                    Salt = passSalt,
-                    Hash = passHash
-                }
-            );
-            
             _context.Videos.Add(new Video
             {
                 Id = 1,
@@ -55,7 +42,7 @@ namespace NUnitTests
                 Actors= new List<Actor>
                 {
                     new Actor { Id = 1, Name = "Morgan", Surname = "Freeman" },
-                    new Actor { Id = 2, Name = "Bob", Surname = "Gunton" }
+                    new Actor { Id = 2, Name = "Bob", Surname = "Gunton" },
                 },
                 Categories = new List<Category>
                 {
@@ -64,7 +51,9 @@ namespace NUnitTests
                 },
                 Ratings = new List<Rating>
                 {
-                    new Rating { Id = 1, Value = 4.6F, VideoId = 1, UserId = 1 }
+                    new Rating { Id = 1, Value = 4.6F, VideoId = 1, UserId = 1 },
+                    new Rating { Id = 2, Value = 3.6F, VideoId = 1, UserId = 1 },
+                    new Rating { Id = 3, Value = 4.1F, VideoId = 1, UserId = 1 }
                 }
             });
             _context.Videos.Add(new Video
@@ -87,7 +76,7 @@ namespace NUnitTests
                 },
                 Ratings = new List<Rating>
                 {
-                    new Rating { Id = 2, Value = 4.6F, VideoId = 2, UserId = 1 }
+                    new Rating { Id = 4, Value = 4.4F, VideoId = 2, UserId = 1 }
                 }
             });
             _context.Videos.Add(new Video
@@ -108,10 +97,7 @@ namespace NUnitTests
                     new Category { Id = 5, Name = "ACTION"},
                     new Category { Id = 6, Name = "COMEDY" }
                 },
-                Ratings = new List<Rating>
-                {
-                    new Rating { Id = 3, Value = 4.6F, VideoId = 3, UserId = 1 }
-                }
+                Ratings = new List<Rating>()
             });
 
             await _context.SaveChangesAsync();
@@ -137,9 +123,34 @@ namespace NUnitTests
         }
 
         [Test]
-        public async Task RatingTest_Valid()
+        public async Task RatingTest_NormalCase_ReturnsValid()
         {
-            var videosList = await _videosService.GetTopVideos(0);
+            var videosList = (await _videosService.GetTopVideos(0)).Data;
+
+            var film1 = videosList.Find(x => x.Id == 1);
+            Assert.AreEqual(4.10, film1.AverageRating, .1);
+        }
+
+        [Test]
+        public async Task RatingTest_NoRatings_Returns0()
+        {
+            var videosList = (await _videosService.GetTopVideos(0)).Data;
+
+            var film1 = videosList.Find(x => x.Id == 3);
+            Assert.AreEqual(0, film1.AverageRating);
+        }
+
+        [Test]
+        public async Task RatingTest_RangeCheck_ReturnsNumberPositiveOrZero()
+        {
+            var videosList = (await _videosService.GetTopVideos(0)).Data;
+
+            // every average rating needs to be between 0 and 5 (0 and 5 are included)
+            videosList.ForEach(x =>
+            {
+                Assert.IsTrue(x.AverageRating >= 0 && x.AverageRating <= 5);
+            });
+
         }
     }
 }
