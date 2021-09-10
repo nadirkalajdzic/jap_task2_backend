@@ -164,7 +164,6 @@ namespace NUnitTests
 
             var ratingAfter = (await _context.Ratings.Where(x => x.VideoId == 1).ToListAsync()).Average(x => x.Value);
             
-            //should only be one from the three given movies
             Assert.AreEqual(4.3F, ratingAfter, .1);
         }
 
@@ -175,13 +174,17 @@ namespace NUnitTests
             var response2 = await _ratingsService.AddRating(4.1F, 2);
 
             //Is the rating added?
+
+            //first one needs to be added
             Assert.IsTrue(response1.Success);
+            Assert.AreEqual(response1.Message, "Successfully added rating");
+
+            //second time it shouldn't. one user cannot rate the same film/show twice!
             Assert.IsFalse(response2.Success);
             Assert.AreEqual(response2.Message, "You already rated this item");
 
             var ratingAfter = (await _context.Ratings.Where(x => x.VideoId == 1).ToListAsync()).Average(x => x.Value);
 
-            //should only be one from the three given movies
             Assert.AreEqual(4.3F, ratingAfter, .1);
         }
     }

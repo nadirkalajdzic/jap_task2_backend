@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using jap_task2_backend.Data;
+using jap_task2_backend.DTO.Actor;
+using jap_task2_backend.DTO.Category;
 using jap_task2_backend.DTO.Video;
 using jap_task2_backend.Models;
 using Microsoft.EntityFrameworkCore;
@@ -24,30 +26,48 @@ namespace jap_task2_backend.Services.VideosService
 
         public async Task<ServiceResponse<List<GetVideoDTO>>> GetTopVideos(int type)
         {
-            var serviceResponse = new ServiceResponse<List<GetVideoDTO>>();
-
-            var topMovies = await _context.Videos.Include(x => x.Ratings)
+            var serviceResponse = new ServiceResponse<List<GetVideoDTO>>
+            {
+                Data = await _context.Videos.Include(x => x.Ratings)
                                                  .AsSplitQuery()
                                                  .Where(x => x.Type == type)
-                                                 .OrderByDescending(x => x.Ratings.Select(x => x.Value).Average())
-                                                 .ToListAsync();
+                                                 .Select(x => new GetVideoDTO
+                                                 {
+                                                     Id = x.Id,
+                                                     Title = x.Title,
+                                                     Description = x.Description,
+                                                     Image_Url = x.Image_Url,
+                                                     ReleaseDate = x.ReleaseDate,
+                                                     AverageRating = x.Ratings.Select(x => x.Value).DefaultIfEmpty().Average()
+                                                 })
+                                                 .OrderByDescending(x => x.AverageRating)
+                                                 .ToListAsync()
+            };
 
-            serviceResponse.Data = topMovies.Select(x => _mapper.Map<GetVideoDTO>(x)).ToList();
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<List<GetVideoDTO>>> GetTop10Videos(int type)
         {
-            var serviceResponse = new ServiceResponse<List<GetVideoDTO>>();
-
-            var topMovies = await _context.Videos.Include(x => x.Ratings)
+            var serviceResponse = new ServiceResponse<List<GetVideoDTO>>
+            {
+                Data = await _context.Videos.Include(x => x.Ratings)
                                                  .AsSplitQuery()
                                                  .Where(x => x.Type == type)
-                                                 .OrderByDescending(x => x.Ratings.Select(x => x.Value).Average())
+                                                 .Select(x => new GetVideoDTO
+                                                 {
+                                                     Id = x.Id,
+                                                     Title = x.Title,
+                                                     Description = x.Description,
+                                                     Image_Url = x.Image_Url,
+                                                     ReleaseDate = x.ReleaseDate,
+                                                     AverageRating = x.Ratings.Select(x => x.Value).DefaultIfEmpty().Average()
+                                                 })
+                                                 .OrderByDescending(x => x.AverageRating)
                                                  .Take(10)
-                                                 .ToListAsync();
+                                                 .ToListAsync()
+            };
 
-            serviceResponse.Data = topMovies.Select(x => _mapper.Map<GetVideoDTO>(x)).ToList();
             return serviceResponse;
         }
 
@@ -56,9 +76,20 @@ namespace jap_task2_backend.Services.VideosService
             ServiceResponse<GetVideoFullInfoDTO> serviceResponse = new ServiceResponse<GetVideoFullInfoDTO>();
 
             var video = await _context.Videos
-                .Include(x => x.Actors).AsSplitQuery()
-                .Include(x => x.Categories).AsSplitQuery()
-                .Include(x => x.Ratings).AsSplitQuery()
+                .Include(x => x.Actors)
+                .Include(x => x.Categories)
+                .Include(x => x.Ratings)
+                .Select(x => new GetVideoFullInfoDTO
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    Image_Url = x.Image_Url,
+                    ReleaseDate = x.ReleaseDate,
+                    AverageRating = x.Ratings.Select(x => x.Value).DefaultIfEmpty().Average(),
+                    Actors = x.Actors.Select(x => new GetActorForVideoDTO{ Name = x.Name, Surname = x.Surname }).ToList(),
+                    Categories = x.Categories.Select(x => new GetCategoryForVideoDTO { Name = x.Name }).ToList()
+                })
                 .FirstOrDefaultAsync(x => x.Id == Id);
 
             serviceResponse.Data = _mapper.Map<GetVideoFullInfoDTO>(video);

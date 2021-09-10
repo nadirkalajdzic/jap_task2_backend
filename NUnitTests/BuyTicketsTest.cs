@@ -59,7 +59,8 @@ namespace NUnitTests
             AuthService.CreatePasswordHash("admin", out byte[] passHash, out byte[] passSalt);
             _context.Users.Add(
                 new User 
-                { Id = 1, 
+                { 
+                  Id = 1, 
                   Name = "Admin", 
                   Surname = "Admin", 
                   Email = "admin@gmail.com", 
