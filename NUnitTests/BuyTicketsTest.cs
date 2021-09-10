@@ -15,13 +15,14 @@ using System.Threading.Tasks;
 
 namespace NUnitTests
 {
+    [TestFixture]
     public class BuyTicketsTest
     {
         DataContext _context;
         IAuthService authService;
         ITicketsService ticketsService;
 
-        [OneTimeSetUp]
+        [SetUp]
         public async Task OneTimeSetupAsync()
         {
             // database setup
@@ -95,6 +96,12 @@ namespace NUnitTests
             ticketsService = new TicketsService(_context, mockHttpContextAccessor.Object);
             // ----------------------------------------------------------------------------------------
 
+        }
+
+        [TearDown]
+        public async Task TearDownAsync()
+        {
+            await _context.Database.EnsureDeletedAsync();
         }
 
         [Test]
