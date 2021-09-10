@@ -36,22 +36,18 @@ namespace jap_task2_backend.Services.TicketsService
             var userId = GetUserId();
             var screening = await _context.Screenings.FirstOrDefaultAsync(x => x.Id == buyTicketDTO.ScreeningId);
 
-            if(screening == null)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Data = false;
+            serviceResponse.Success = false;
+            serviceResponse.Data = false;
+
+            if (screening == null)
                 serviceResponse.Message = "Screening does not exist!";
-            } else if(screening.ScreeningDate <= DateTime.Now)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Data = false;
-                serviceResponse.Message = "Screening is in the past!";
-            } else if(screening.SoldTickets + buyTicketDTO.NumberOfTickets > screening.AvailableTickets)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Data = false;
+            else if(screening.ScreeningDate <= DateTime.Now)
+                serviceResponse.Message = "Screening is in the past!"; 
+            else if(screening.AvailableTickets == screening.SoldTickets)
+                serviceResponse.Message = "Sould out!";
+            else if(screening.SoldTickets + buyTicketDTO.NumberOfTickets > screening.AvailableTickets)
                 serviceResponse.Message = "Cannot buy that many tickets. There are not that many tickets available!";
-            } else
+            else
             {
                 screening.SoldTickets += buyTicketDTO.NumberOfTickets;
                 await _context.SaveChangesAsync();
